@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Gestión de Clientes (DOM CRUD)</title>
+    <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+<header class="container">
+    <h1>Gestión de Clientes</h1>
+    <p class="muted">CRUD con DOM + validaciones + modal de edición</p>
+</header>
+
+<main class="container grid">
+    <!-- Formulario alta -->
+    <section class="card">
+        <h2>Alta de cliente</h2>
+
+        <form id="form-alta" novalidate>
+            <div class="field">
+                <label for="nombre">Nombre</label>
+                <input id="nombre" name="nombre" type="text" placeholder="Ej: Dani Pérez" autocomplete="name" />
+                <small class="error" data-error-for="nombre"></small>
+            </div>
+
+            <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="Ej: dani@mail.com" autocomplete="email" />
+                <small class="error" data-error-for="email"></small>
+            </div>
+
+            <div class="field">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" name="telefono" type="tel" placeholder="Ej: 600123123" autocomplete="tel" />
+                <small class="error" data-error-for="telefono"></small>
+            </div>
+
+            <button id="btn-crear" type="submit">Crear cliente</button>
+        </form>
+
+        <div id="toast" class="toast" aria-live="polite"></div>
+    </section>
+
+    <!-- Listado -->
+    <section class="card">
+        <div class="row">
+            <h2>Clientes</h2>
+            <input id="buscador" class="search" type="search" placeholder="Buscar por nombre o email..." />
+        </div>
+
+        <div class="table-wrap">
+            <table class="table" aria-describedby="tabla-desc">
+                <caption id="tabla-desc" class="sr-only">Listado de clientes con acciones de editar y eliminar</caption>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>
+                        <button class="th-btn" data-sort="nombre" type="button">
+                            Nombre <span class="muted" id="sort-nombre"></span>
+                        </button>
+                    </th>
+                    <th>
+                        <button class="th-btn" data-sort="email" type="button">
+                            Email <span class="muted" id="sort-email"></span>
+                        </button>
+                    </th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+                </thead>
+                <tbody id="tbody-clientes">
+                <!-- Render dinámico -->
+                </tbody>
+            </table>
+        </div>
+
+        <p id="estado-vacio" class="muted empty">No hay clientes todavía.</p>
+    </section>
+</main>
+
+<!-- Modal edición -->
+<div id="modal-backdrop" class="backdrop hidden" role="presentation"></div>
+
+<dialog id="modal-editar" class="modal" aria-labelledby="modal-title">
+    <form id="form-editar" method="dialog">
+        <div class="modal-head">
+            <h3 id="modal-title">Editar cliente</h3>
+            <button id="btn-cerrar-modal" class="icon-btn" type="button" aria-label="Cerrar">✕</button>
+        </div>
+
+        <input type="hidden" id="edit-id" name="id" />
+
+        <div class="field">
+            <label for="edit-nombre">Nombre</label>
+            <input id="edit-nombre" name="nombre" type="text" />
+            <small class="error" data-error-for="edit-nombre"></small>
+        </div>
+
+        <div class="field">
+            <label for="edit-email">Email</label>
+            <input id="edit-email" name="email" type="email" />
+            <small class="error" data-error-for="edit-email"></small>
+        </div>
+
+        <div class="field">
+            <label for="edit-telefono">Teléfono</label>
+            <input id="edit-telefono" name="telefono" type="tel" />
+            <small class="error" data-error-for="edit-telefono"></small>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="btn-secondary" id="btn-cancelar">Cancelar</button>
+            <button type="submit" id="btn-guardar">Guardar cambios</button>
+        </div>
+    </form>
+</dialog>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>
