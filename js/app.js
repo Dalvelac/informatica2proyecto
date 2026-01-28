@@ -1,8 +1,6 @@
 // wiring
 
 import { setupEvents } from "./events.js";
-import { addCliente } from "./state.js";
-import { generateId } from "./utils.js";
 
 // Alta
 const formAlta = document.getElementById("form-alta");
@@ -69,27 +67,6 @@ const editErrors = {
         errorEl: document.querySelector('[data-error-for="edit-telefono"]'),
     },
 };
-
-addCliente({
-    id: generateId(),
-    nombre: "Ana López",
-    email: "ana@mail.com",
-    telefono: "600123123"
-});
-
-addCliente({
-    id: generateId(),
-    nombre: "Carlos Ruiz",
-    email: "carlos@mail.com",
-    telefono: "611222333"
-});
-
-addCliente({
-    id: generateId(),
-    nombre: "Lucía Martín",
-    email: "lucia@mail.com",
-    telefono: "622333444"
-});
 
 // Arrancamos app
 setupEvents({

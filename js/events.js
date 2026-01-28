@@ -259,6 +259,10 @@ export function setupEvents(deps) {
         applyView();
     });
 
+    // Estado inicial del botón (sin mostrar errores todavía)
+    const btnCrear = document.getElementById("btn-crear");
+    if (btnCrear) btnCrear.disabled = true;
+
     // Render inicial
     applyView();
 }

@@ -13,10 +13,48 @@ function save() {
 
 function load() {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) state.clientes = JSON.parse(raw);
+    if (!raw) return;
+
+    try {
+        const parsed = JSON.parse(raw);
+        // Esperamos un array; si no, lo ignoramos.
+        if (Array.isArray(parsed)) state.clientes = parsed;
+    } catch {
+        // Si el JSON está corrupto, lo limpiamos para que la app no reviente.
+        localStorage.removeItem(STORAGE_KEY);
+    }
+}
+
+function seedIfEmpty() {
+    // Solo seed si no hay nada cargado (ni en storage ni en memoria).
+    if (Array.isArray(state.clientes) && state.clientes.length > 0) return;
+
+    state.clientes = [
+        {
+            id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            nombre: "Ana López",
+            email: "ana@mail.com",
+            telefono: "600123123",
+        },
+        {
+            id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            nombre: "Carlos Ruiz",
+            email: "carlos@mail.com",
+            telefono: "611222333",
+        },
+        {
+            id: `${Date.now()}-${Math.floor(Math.random() * 1000)}`,
+            nombre: "Lucía Martín",
+            email: "lucia@mail.com",
+            telefono: "622333444",
+        },
+    ];
+
+    save();
 }
 
 load();
+seedIfEmpty();
 
 export function getClientes() {
     return state.clientes;
