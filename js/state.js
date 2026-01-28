@@ -6,6 +6,7 @@ const state = {
 };
 
 const STORAGE_KEY = "clientes_dom_app";
+const SEEDED_KEY = "clientes_dom_app__seeded_v1";
 
 function save() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.clientes));
@@ -26,8 +27,10 @@ function load() {
 }
 
 function seedIfEmpty() {
-    // Solo seed si no hay nada cargado (ni en storage ni en memoria).
-    if (Array.isArray(state.clientes) && state.clientes.length > 0) return;
+    // Seed una sola vez por navegador.
+    // Y, si por lo que sea se ha duplicado el seed, lo dejamos en exactamente 3.
+    const seeded = localStorage.getItem(SEEDED_KEY) === "1";
+    if (seeded) return;
 
     state.clientes = [
         {
@@ -51,6 +54,7 @@ function seedIfEmpty() {
     ];
 
     save();
+    localStorage.setItem(SEEDED_KEY, "1");
 }
 
 load();
