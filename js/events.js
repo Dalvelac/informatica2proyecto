@@ -73,7 +73,7 @@ export function setupEvents(deps) {
         });
     };
 
-    // Validación "live" básica en alta (no demasiado pesada)
+    // Validación live básica en alta
     const validateAltaLive = () => {
         const payload = {
             nombre: inputNombre.value,
@@ -82,6 +82,7 @@ export function setupEvents(deps) {
         };
 
         const res = validateCliente(payload, "create");
+        document.getElementById("btn-crear").disabled = !res.ok;
 
         // Pintamos errores campo a campo
         setFieldError(altaErrors.nombre.inputEl, altaErrors.nombre.errorEl, res.errors.nombre || "");

@@ -5,25 +5,40 @@ const state = {
     clientes: [],
 };
 
+const STORAGE_KEY = "clientes_dom_app";
+
+function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.clientes));
+}
+
+function load() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state.clientes = JSON.parse(raw);
+}
+
+load();
+
 export function getClientes() {
     return state.clientes;
 }
 
 export function addCliente(cliente) {
     state.clientes.push(cliente);
+    save();
 }
 
 export function updateCliente(id, data) {
     const idx = state.clientes.findIndex(c => c.id === id);
     if (idx === -1) return false;
-
     state.clientes[idx] = { ...state.clientes[idx], ...data };
+    save();
     return true;
 }
 
 export function removeCliente(id) {
     const before = state.clientes.length;
     state.clientes = state.clientes.filter(c => c.id !== id);
+    save();
     return state.clientes.length !== before;
 }
 
