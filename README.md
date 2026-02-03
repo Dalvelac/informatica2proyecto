@@ -1,1 +1,1 @@
-# informatica2proyecto
+# Web Javascript Simple
